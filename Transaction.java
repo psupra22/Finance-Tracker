@@ -1,47 +1,33 @@
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
-public class Transaction {
-    // Transaction Category(income, expense, balance), Date-Time, Category, Amount
-    private String type, category;
-    private LocalDateTime dateTime;
-    private double amount;
+// Transaction Category(income, expense, balance), Date-Time, Category, Amount
+public record Transaction(TYPE type, LocalDateTime dateTime, String category, BigDecimal amount) {
     static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    Transaction(String type, LocalDateTime dateTime, String category, double amount) {
-        this.type = type;
-        this.dateTime = dateTime.truncatedTo(ChronoUnit.MINUTES);
-        this.category = category;
-        this.amount = amount;
+    Transaction with(LocalDateTime dateTime, BigDecimal amount){
+        return new Transaction(type, dateTime, category, amount);
     }
-
-    String getType() { return this.type; }
-    LocalDateTime getDateTime() { return this.dateTime; }
-    void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
-    String getCategory() { return this.category; }
-    double getAmount() { return this.amount; }
-    void setAmount(double amount) { this.amount = amount; }
 
     String formattedString() {
         return String.format("%s | %s | %s | $%.2f",
-                             type.toUpperCase(), formatter.format(dateTime), category.toUpperCase(), amount);
+                             type.toString().toUpperCase(), formatter.format(dateTime), category.toUpperCase(), amount);
     }
 
     @Override
     public String toString() {
         return type + "," + formatter.format(dateTime) + "," + category + "," + amount;
     }
+}
 
+enum TYPE {
+    ALL("all"), INCOME("income"), EXPENSE("expense"), BALANCE("balance");
+    private final String type;
+    TYPE(String type) { this.type = type; }
+    
     @Override
-    public boolean equals(Object transaction) {
-        if (this == transaction) return true;
-        if (transaction == null || getClass() != transaction.getClass()) return false;
-
-        Transaction that = (Transaction) transaction;
-        return this.type.equals(that.type) &&
-            formatter.format(this.dateTime).equals(formatter.format(that.dateTime)) &&
-            this.category.equals(that.category) &&
-            Double.compare(this.amount, that.amount) == 0;
+    public String toString() {
+        return type;
     }
 }
