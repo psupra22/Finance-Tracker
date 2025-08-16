@@ -1,13 +1,13 @@
-# 💰 Finance Tracker
+# Finance Tracker
 A simple Java-based personal finance tracker that allows users to add and manage transactions, view summaries, and track their spending over time. The system provides a command-line interface for interaction.
 
 ## Features
-- ➕ Add income and expense transactions
-- ➖ Remove income and expense transactions
-- 💰 View current balance
-- 📋 View all transactions with categories
-- 🗂️ Categorize transactions (e.g., Food, Rent, Utilities)
-- 💾 Lightweight file-based storage (no database required)
+- Add income and expense transactions
+- Remove income and expense transactions
+- View current balance
+- View all transactions with categories
+- Categorize transactions (e.g., Food, Rent, Utilities)
+- Lightweight file-based storage (no database required)
 
 ## Prerequisites
 - Java Development Kit (JDK) 8 or higher
